@@ -45,6 +45,8 @@ def get_filePath(cleaned = False):
     return file_dir
 
 def subtract_time(reset_ind,data,reset_times):
+    '''Subtract time from the reset times to the end of the sawtooth'''
+    '''Only necessary for Summer 2023 data'''
     #row.name is the reset index ([0,1,2,...])
     #row.times is the index in data ([50087, 61382, ...])
     for row in reset_ind.iterrows():
@@ -62,6 +64,8 @@ def subtract_time(reset_ind,data,reset_times):
     return data
     
 def sawtooth():
+    '''Clean the sawtoothed EEG data'''
+    '''Summer 2023 data only'''
     file_dir = get_filePath(cleaned = False)
     for file in file_dir:
         try:
@@ -132,6 +136,7 @@ def sawtooth():
             print(error)
 
 def compileBehavior(questions, data_ses, short_ses, marker_lst, remove = True):
+    '''Grab the markers from the instructor data and line them up with the questions'''
     
     # instructor_df is a df of what onsets for slide numbers
     instructor_dir = '../sub-instructor' + os.sep + data_ses
@@ -169,7 +174,7 @@ def removeMarker_Behav(behavior_df, marker_lst):
     
     return behavior_df
 
-def readRawAndProcess(data_fnames, behavior_df, filt, sfreq = 256, plot = True):
+def readRawAndProcess(data_fnames, behavior_df, filt = [0.1, 50, 60], sfreq = 256, plot = True):
     
     ''' read in a raw file based on sfreq
     '''
